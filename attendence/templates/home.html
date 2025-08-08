@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block head %}  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> {% endblock head %}
+{% block bodyclass %} bg-blue-100 {% endblock bodyclass %}
+
+{% block body %}
+
+
+    <p class="text-2xl z-0 text-[#0e141c] font-semibold italic font-serif ml-2  max-sm:text-xl ">
+    Welcome , {{user.username}}
+</p>
+<!--Bar chart -->
+<h2 style="text-align:center;">📊 Daily Attendance</h2>
+<canvas id="attendanceChart" width="600" height="300"></canvas>
+
+
+<script>
+    // Convert Django data to JS format
+    const dataFromBackend = {{ barchart_data|safe }};
+
+    const labels = dataFromBackend.map(item => item.labels);
+    const presentData = dataFromBackend.map(item => item.present_data);
+    const absentData = dataFromBackend.map(item => item.absent_data);
+
+    const ctx = document.getElementById('attendanceChart').getContext('2d');
+    const attendanceChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Present',
+                    data: presentData,
+                    backgroundColor: '#93B1B5',
+                    borderWidth: 0.5
+                },
+                {
+                    label: 'Absent',
+                    data: absentData,
+                    backgroundColor: 'powderblue',
+                    borderWidth: 0.5
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Subject-wise Attendance Report'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Students'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Subjects'
+                    }
+                }
+            },
+        }
+    });
+</script>
+
+<!-- pie chart -->
+<h1 class="text-2xl font-bold mt-6 text-center">Attendance by Gender</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+{% for chart in chart_data %}
+ <div class="my-6 bg-white py-4 rounded-2xl mx-3">
+    <div>
+        <h2 class="text-xl font-bold text-center">{{ chart.subject }}</h2>
+        <div style="width: 100%; max-width: 400px; margin: auto; ">
+            <canvas id="chart_{{ forloop.counter }}"></canvas>
+        </div>
+    </div>
+  <script>
+    const ctx{{ forloop.counter }} = document.getElementById('chart_{{ forloop.counter }}').getContext('2d');
+    new Chart(ctx{{ forloop.counter }}, {
+        type : 'pie',
+        data : {
+            labels : {{ chart.labels | safe}},
+            datasets : [{
+                label : 'Attendence Count ',
+                data : {{ chart.values | safe}},
+                backgroundColor : [ 'powderblue', '#93B1B5', '#4F7C82', '#0B2E33'],
+                borderWidth : 1
+            }]
+
+        },
+        options : {
+            plugins : {
+                legend : {
+                    position : 'bottom',
+                },
+                title : {
+                    display : true ,
+                    text : 'Gender-wise Attendance for {{ chart.subject }}'
+
+                }
+            }
+        }
+    });
+  </script>
+ </div>
+{% endfor %}
+</div>
+{% endblock body %}

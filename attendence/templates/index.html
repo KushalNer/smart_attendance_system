@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Smart Attendance System{% endblock title %}
+{% block head %} 
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        html { scroll-behavior: smooth; }
+    </style>
+{% endblock head %}
+
+{% block bodyclass %} 
+    bg-gradient-to-br from-[#f5f7fa] to-[#c3cfe2] min-h-screen font-sans
+{% endblock bodyclass %}
+{% block body %}
+
+    <!-- Hero Section -->
+    <section class="text-gray-800 py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl font-extrabold mb-6 animate-bounce">Smart Attendance System</h1>
+            <p class="text-xl mb-6 max-w-2xl mx-auto animate-fadeIn">
+                Mark attendance effortlessly using Face Recognition! Save time, avoid proxies, and get real-time analytics.
+            </p>
+
+            <!-- Animated Buttons -->
+            <div class="space-x-4 mt-8 animate-fadeIn flex justify-center lg:flex-row max-sm:flex-col ">
+                <div>
+                    <a href="{% url 'loginaccount' %}" class="  bg-[#4f46e5] text-white px-6 py-3 rounded-lg text-lg hover:bg-[#3730a3] transition duration-300 shadow-lg">
+                        Login as Teacher
+                    </a>
+                </div>
+                <div class="max-sm:mt-8">
+                    <a href="{% url 'sregister' %}" class="  border-2 border-[#4f46e5] text-[#4f46e5] px-6 py-3 rounded-lg text-lg hover:bg-[#4f46e5] hover:text-white transition duration-300 shadow-md">
+                        Register as a Student
+                    </a>
+                </div>
+            </div>
+
+            <!-- Animation or Lottie -->
+            <div class="mt-10 flex justify-center">
+                <lottie-player src="https://assets5.lottiefiles.com/packages/lf20_4kx2q32n.json" background="transparent" speed="1" style="width: 400px; height: 400px;" loop autoplay></lottie-player>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto px-8">
+            <h2 class="text-3xl font-bold text-center mb-10">Features</h2>
+            <div class="grid md:grid-cols-3 gap-10">
+                <div class="bg-[#e0e7ff] p-6 rounded-xl shadow-md hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold mb-2">🎥 Face Recognition</h3>
+                    <p>Detect and mark attendance using real-time webcam face recognition.</p>
+                </div>
+                <div class="bg-[#fde68a] p-6 rounded-xl shadow-md hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold mb-2">📊 Attendance Reports</h3>
+                    <p>View subject-wise, gender-wise, and date-wise attendance summaries.</p>
+                </div>
+                <div class="bg-[#bbf7d0] p-6 rounded-xl shadow-md hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold mb-2">⏱️ Real-time Alerts</h3>
+                    <p>Instant alerts for unknown faces or repeated attendance attempts.</p>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-10 mt-5">
+                <div class="bg-[#e0e7ff] p-6 rounded-xl shadow-md hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold mb-2">📈 Attendance Analysis</h3>
+                    <p>Analyze each student's attendance percentage over a selected date range with easy-to-understand visual summaries. Helps identify low attendance quickly.</p>
+                </div>
+                <div class="bg-[#fde68a] p-6 rounded-xl shadow-md hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold mb-2">📥 Download Attendance Report</h3>
+                    <p>Give teachers and administrators the power to download student attendance records easily in a clean and organized format.</p>
+                </div>
+                <div class="bg-[#bbf7d0] p-6 rounded-xl shadow-md hover:scale-105 transition">
+                    <h3 class="text-xl font-semibold mb-2">📞 Contact Us for Help</h3>
+                    <p>Reach out directly through our Contact Us page. Whether it's technical support, feedback, or questions about attendance records</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section id="about" class="min-h-screen bg-gray-100 py-16 px-4 text-gray-800">
+  <div class="max-w-4xl mx-auto text-center">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 animate-pulse text-gray-800">About Our Attendance System</h1>
+    <p class="text-lg text-gray-600 mb-10 animate-fadeIn">
+      Our AI-based attendance system makes student attendance tracking fast, secure, and efficient using face recognition technology.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Feature 1 -->
+      <div class="p-6 rounded-lg shadow-md bg-white hover:scale-105 transform transition">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">🎯 Purpose</h2>
+        <p>
+          The system is designed to automate the attendance process using facial recognition,
+          reducing manual errors and saving time for both students and teachers.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="p-6 rounded-lg shadow-md bg-white hover:scale-105 transform transition">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">📊 Attendance Analysis</h2>
+        <p>
+          Teachers can analyze student attendance percentage over custom date ranges with interactive charts and reports.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="p-6 rounded-lg shadow-md bg-white hover:scale-105 transform transition">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">📤 Report Download</h2>
+        <p>
+          Download detailed attendance reports in PDF or Excel formats for record keeping or sharing with management.
+        </p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="p-6 rounded-lg shadow-md bg-white hover:scale-105 transform transition">
+        <h2 class="text-xl font-semibold text-gray-800 mb-2">📞 Contact Us for Help</h2>
+        <p>
+           Reach out directly through our Contact Us page. Whether it's technical support, feedback, or questions about attendance records
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- 🔝 Page Header -->
+  <header id="services" class=" text-gray-800 py-8 shadow-lg">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold">💼 Our Services</h1>
+      <p class="text-lg mt-2 text-gray-700">Smart & Secure Attendance System Features</p>
+    </div>
+  </header>
+
+  <!-- 🔽 Services Grid -->
+  <main class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    <!-- ✅ Face Recognition -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+      <div class="text-blue-600 text-3xl mb-4">
+        <i class="fas fa-camera"></i>
+      </div>
+      <h2 class="text-xl font-semibold mb-2">Face Attendance</h2>
+      <p class="text-gray-600">AI-based face detection helps mark attendance instantly and securely without physical contact.</p>
+    </div>
+
+    <!-- ✅ Attendance Analysis -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+      <div class="text-green-600 text-3xl mb-4">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <h2 class="text-xl font-semibold mb-2">Attendance Analysis</h2>
+      <p class="text-gray-600">Track student attendance percentage and generate detailed analysis across a custom date range.</p>
+    </div>
+
+    <!-- ✅ Download Reports -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition ">
+      <div class="text-purple-600 text-3xl mb-4">
+        <i class="fas fa-download"></i> <!--for simbol show in a home screen-->
+      </div>
+      <h2 class="text-xl font-semibold mb-2">Download Reports</h2>
+      <p class="text-gray-600">Download attendance data as PDF or Excel files for easy record-keeping and reporting.</p>
+    </div>
+
+    {% comment %} <!-- ✅ Email Notifications -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+      <div class="text-pink-600 text-3xl mb-4">
+        <i class="fas fa-envelope"></i>
+      </div>
+      <h2 class="text-xl font-semibold mb-2">Email Alerts</h2>
+      <p class="text-gray-600">Automatically send email notifications to students or parents when attendance is marked.</p>
+    </div> {% endcomment %}
+
+    <!-- ✅ Filtering Tools -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+      <div class="text-yellow-500 text-3xl mb-4">
+        <i class="fas fa-filter"></i>
+      </div>
+      <h2 class="text-xl font-semibold mb-2">Smart Filtering</h2>
+      <p class="text-gray-600">View or export attendance based on date, subject, class, or individual student filters.</p>
+    </div>
+
+    <!-- ✅ Charts and Graphs -->
+    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition">
+      <div class="text-red-600 text-3xl mb-4">
+        <i class="fas fa-chart-pie"></i>
+      </div>
+      <h2 class="text-xl font-semibold mb-2">Charts & Visuals</h2>
+      <p class="text-gray-600">Pie and bar charts give a visual overview of attendance patterns by gender, class, or subject.</p>
+    </div>
+
+  </main>
+    <!-- Footer -->
+    <footer class="text-center p-4 bg-gray-800 text-white mt-10">
+        &copy; 2025 Smart Attendance System | Designed by Kushal Ner
+    </footer>
+
+    <!-- Simple Animations -->
+    {% comment %} <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+    </style> {% endcomment %}
+{% endblock body%}

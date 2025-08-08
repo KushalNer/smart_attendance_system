@@ -1,0 +1,21 @@
+Install Required Libraries
+pip install face_recognition opencv-python speechrecognition pyaudio numpy pandas
+
+
+
+file structure
+ai_attendance/
+├── dataset/
+│   ├── faces/
+│   └── voices/
+├── embeddings/
+│   ├── face_encodings.npy
+│   └── voice_encodings.npy
+├── register.py
+├── recognize.py
+├── attendance.csv
+
+
+deepface face recognize
+pip install deepface
+pip install tensorflow keras opencv-contrib-python matplotlib

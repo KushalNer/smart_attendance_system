@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}
+Attendence Page
+{% endblock title %}
+{% block bodyclass %}bg-blue-100 {% endblock bodyclass%}
+{% block body %}
+
+<form method="get" action="{% url "recognize_face" user.username %}">
+{% csrf_token %}
+{% comment %} <label class="font-semibold mb-1 text-xl mt-3 ml-4">Select Subject</label> {% endcomment %}
+<select name="sname" required class="w-1/2  md:w-1/4 p-2 rounded mt-3 ml-4 bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#404f68]">
+    <option value="" selected disabled class="hidden">Select Subject</option>
+        {% for subject in subject_data%}
+          <option value="{{subject.name}}" class="bg-white hover:bg-[#314b6e]" >{{subject.name}}</option>
+        {% endfor %}
+</select>
+<button type="submit" class=" bg-[#0e141c]  hover:bg-[#607ea2] text-white font-bold py-1.5 px-4 text-lg ml-2 mt-7 rounded">
+   Mark Attendence
+</button>
+
+</form>
+
+<div class="bg-gray-50 rounded-2xl w-fit m-auto py-4 mt-7 " >
+<!-- Headline -->
+<h2 class="text-2xl font-bold text-center text-[#0e141c] mt-2 mb-4 ">
+  View Student Attendance by Subject & Date
+</h2>
+
+<!-- Attendance Filter Form -->
+<form method="get" action="{% url "attendencedata" %}">
+  {% csrf_token %}
+  <div class="flex justify-center items-center gap-3 p-4 px-7 flex-wrap  ">
+
+    <!-- Subject Dropdown -->
+    <select name="subjectname" required
+      class="w-3s md:w-lg p-2 sm:w-xs   rounded bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#404f68]">
+      <option value="" selected disabled hidden>Select Subject</option>
+      {% for subject in subject_data %}
+        <option value="{{ subject.name }}">{{ subject.name }}</option>
+      {% endfor %}
+    </select>
+
+    <!-- Date Picker -->
+    <input type="date" name="adate" required
+      class="p-2 ml-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#404f68]">
+
+    <!-- Submit Button -->
+    <button type="submit"
+      class="bg-[#0e141c] ml-2 hover:bg-[#607ea2] text-white font-bold py-2 px-4 rounded sm:flex-col">
+      Show Attendance
+    </button>
+  </div>
+</form>
+
+</div>
+{%if attendence_data %}
+
+<div class="ml-5 mt-6">
+<a href="{% url 'exportdatewise' %}" class="bg-[#314b6e]   hover:bg-[#607ea2] text-white font-bold py-2 px-4 rounded sm:flex-col">
+  ⬇ Download Excel Report
+</a> 
+</div>
+
+
+<div class="ml-1 mr-1 md:mx-5 sm:mx-4 lg:mx-5">
+<table class="border-1  mt-7 w-1/1  " border="2">
+  <tr class="bg-gray-300 text-black">
+    <th class="border px-4 py-2">Roll No.</th>
+    <th class="border px-4 py-2">Student Name</th>
+    <th class="border px-4 py-2">Gender</th>
+    <th class="border px-4 py-2">Date</th>
+    <th class="border px-4 py-2">Time</th>
+   
+  </tr>
+  {% for data in attendence_data %}
+    <tr class="bg-white text-black">
+      <td class="border px-4 py-2">{{ data.arno }}</td>
+      <td class="border px-4 py-2">{{ data.aname }}</td>
+      <td class="border px-4 py-2">{{ data.agender }}</td>
+      <td class="border px-4 py-2">{{ data.adate }}</td>
+      <td class="border px-4 py-2">{{ data.atime }}</td>
+     
+    </tr>
+  {% endfor %}
+</table>
+</div>
+{% elif attendence_data != None%}
+  <p class="text-2xl font-semibold text-center text-[#0e141c] mt-5 mb-4">No Data Found</p>
+{% endif %}
+{% endblock body %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %} Attendance Analysis {% endblock title%}
+{% block bodyclass %} bg-blue-100 {% endblock bodyclass %}
+{% block body %}
+<br>
+<div class="w-fit md:w-1/2 lg:w-1/2 max-h-fit lg:m-auto md:m-auto   pb-5 bg-gray-50 opacity-90 mt-9 rounded-4xl px-5 ml-3 mr-3">
+    <!-- Headline -->
+    <h2 class="block font-semibold mb-1 text-center text-4xl pt-4  text-[#0e141c]">
+         Student Attendance Analysis
+    </h2>
+    <form method="get" action="{% url "dataanalysis" %}">
+        <div class="flex justify-center items-center gap-3 p-4 px-7 flex-wrap  ">
+                
+
+               <select name="subject" required class="w-full   lg:w-full p-2 rounded mt-3 ml-4 bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#404f68]" >
+                    <option value=" " selected disabled class="hidden">Select Subject </option>
+                    {% for subject in subjects %}
+                        <option value="{{subject.name}}">{{subject.name}}</option>
+                    {% endfor %}
+                </select>
+           
+            <div class="flex max-sm:flex-col max-sm:justify-start">
+                <div class="ml-2">
+                <lable>Start Date</lable>
+                <input type="date" name="startdate" required class="border px-2 py-1 rounded"></div>
+                <div class="ml-2 max-sm:mt-2">
+                <lable>End Date</lable>
+                <input type="date" name="enddate" required class="border px-2 py-1 rounded ml-2"></div>
+            </div>
+            <button type="submit" class="w-full bg-[#0e141c]  hover:bg-[#607ea2] text-white font-bold py-2 px-4 text-xl ml-2 rounded">
+                Generate
+            </button>
+        </div>
+    </form>
+</div>
+
+
+{% if results %}
+<div class="ml-5 mt-6">
+<a href="{% url 'analysis_report_download' %}" class="bg-[#314b6e]   hover:bg-[#607ea2] text-white font-bold py-2 px-4 rounded sm:flex-col">
+  ⬇ Download Excel Report
+</a> 
+</div>
+
+<h2 class="text-xl font-bold my-4 text-center">Attendance Analysis Report of {{subjectname}}</h2>
+<div class="ml-1 mr-1 md:mx-5 sm:mx-4 lg:mx-5">
+    <table class="border-1   w-1/1  " border="2">
+        <tr class="bg-[#0e141c] text-white">
+            <th class="border px-4 py-2">Roll No.</th>
+            <th class="border px-4 py-2">Student Name</th>
+            <th class="border px-4 py-2">Total Lectures</th>
+            <th class="border px-4 py-2">Attend Lectures</th>
+            <th class="border px-4 py-2">Percentage</th>
+        </tr>
+        {% for result in results %}
+        <tr class="bg-white">
+            <td class="border px-4 py-2"> {{result.rno}} </td>
+            <td class="border px-4 py-2"> {{result.sname}} </td>
+            <td class="border px-4 py-2"> {{result.tlecture}} </td>
+            <td class="border px-4 py-2"> {{result.alecture}} </td>
+            <td class="border px-4 py-2"> {{result.percentage}} </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+{% endblock body %}

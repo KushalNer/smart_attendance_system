@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{user_data.username}} page
+{% endblock title %}
+
+
+{% block bodyclass %}bg-blue-100 {% endblock bodyclass %}
+{% block body %}
+
+<div class="flex flex-col md:flex-row max-w-5xl mt-10 p-6 mx-auto gap-6">
+
+    <!-- Image Section -->
+    <div class="max-w-xl p-8 rounded-xl shadow-lg bg-[#8197ac] text-center">
+        <img src="{{ user_data.image.url }}" alt="Profile Picture"
+             class="w-80 h-80 rounded-full border-4 border-[#0a0a0b] object-cover mx-auto">
+    </div>
+
+    <!-- Other Info Section -->
+    <div class="flex md:flex max-w-xl px-8 py-8 rounded-xl shadow-lg bg-[#8197ac] text-white">
+        <div class="px-3">
+            <p class="text-xl max-lg:text-lg font-semibold">Other Information</p>
+            <p class="mt-2">Name:</p>
+            <p class="text-xl font-bold mb-1">{{ user_data.name }}</p>
+            <p>Email:</p>
+            <p class="mb-2">{{ user_data.email }}</p>
+            <p>Joined on:</p>
+            <p class="mb-2"> {{ user_data.date|date:"F d, Y" }}</p>
+        </div>
+        <div class="ml-5 mt-9 px-3">
+            <p>Username:</p>
+            <p class="text-xl mb-2">{{ user_data.username }}</p>
+            <p>Contact No:</p>
+            <p class="mb-2">{{ user_data.contact }}</p>
+            <div class="mt-20">
+            <a href="{% url "userlogout" %}" 
+           class=" bg-gray-200 text-[#314b6e] px-6 py-2 rounded hover:bg-red-600 transition">Logout</a>
+            </div>
+            
+        </div>
+        
+    </div>
+
+</div>
+
+
+    <br><br>
+  
+<div class="max-w-full mx-auto mt-10 bg-white p-8 rounded-2xl shadow-lg">
+  <h2 class="text-3xl font-bold text-center mb-6 text-gray-800">📚 Your Subjects</h2>
+
+    <!-- Add Subject Form -->
+    <form method="POST" action="{% url "subjectdata" user.username %}" class="flex flex-col sm:flex-row gap-4 mb-6 items-center">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Subject Name" required
+            class="w-full sm:w-auto flex-1 border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <input type="text" name="class" placeholder="Class Name" required
+            class="w-full sm:w-auto flex-1 border border-gray-300 p-2  mt-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <button type="submit"
+            class="bg-[#0e141c] hover:bg-[#607ea2] text-white font-semiabold text-xl px-6 py-2 rounded-lg transition">
+            ➕ Add Subject
+        </button>
+    </form>
+      <!-- Subject List -->
+    {% if subject_data %}
+        <div class="overflow-x-auto">
+            <table class="w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                    <tr>
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">#</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Subject Name</th>
+                        <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">Class Name</th>
+                        <th class="px-4 py-3 text-center text-sm font-semibold text-gray-600">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-100">
+                    {% for subject in subject_data %}
+                        <tr>
+                            <td class="px-4 py-2 text-sm text-gray-800 ">{{ forloop.counter }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-800 ">{{ subject.name }}</td>
+                            <td class="px-4 py-2 text-sm text-gray-800 ">{{ subject.classname }}</td>
+                            <td class="px-4 py-2 text-center">
+                                <a href="{% url 'delete_subject' subject.name %}"
+                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded-full text-sm transition">
+                                    ❌ Delete
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+      <p class="text-center text-gray-500 mt-6">No subjects added yet. Use the form above to add some 📘.</p>
+    {% endif %}
+</div>
+
+
+
+{% endblock body %}

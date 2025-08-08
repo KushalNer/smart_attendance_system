@@ -1,0 +1,66 @@
+{% load static tailwind_tags %}
+
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  		{% tailwind_css %}
+
+  <title>{% block title %}{% endblock title %}</title>
+  {% block head %} {% endblock head %}
+</head>
+<body class="{% block bodyclass %}  {% endblock bodyclass %}">
+   <nav class="flex justify-between  bg-[#0e141c]  text-white p-1  max-md:flex-col ">
+      <a href="/" class=" ml-2 text-2xl max-sm:text-center">Smart Attendence System</a>
+      <ul class="flex space-x-4 ml-1rem justify-around max-sm:mt-1">
+        <li class="py-1.5 px-4 rounded-md sm:text-xl  hover:bg-[#314b6e]" ><a href="/" tabindex="0">Home</a></li>
+        {% if user.is_authenticated %}
+          <li class="py-1.5 px-4 rounded-md sm:text-xl hover:bg-[#314b6e]"><a href="{% url "dataanalysis" %}" tabindex="0">Analysis</a></li>
+        {% else %}
+          <li class="py-1.5 px-4 rounded-md sm:text-xl hover:bg-[#314b6e]"><a href="#about" tabindex="0">About</a></li>
+        {%endif%}
+        {% if user.is_authenticated %}
+          <li class="py-1.5 px-4 rounded-md sm:text-xl hover:bg-[#314b6e]"><a href="{% url "attendence" %}" tabindex="0">Attendence</a></li>
+        {% else %}
+          <li class="py-1.5 px-4 rounded-md sm:text-xl hover:bg-[#314b6e]"><a href="#services" tabindex="0">Services</a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li class="py-1.5 px-4  rounded-md sm:text-xl hover:bg-[#314b6e]"><a href="{% url "contactus" %}" tabindex="0">Contact Us</a></li>
+        {% endif %}
+      </ul>
+      <div class="flex right-section mt-1 mb-1 mr-4 space-x-5  max-sm:justify-evenly max-sm:mt-1 sm:text-xl ">
+        <select class="bg-black text-white hover:bg-[#314b6e] focus:ring-[#314b6e] rounded px-2 py-1" onchange="location = this.value ">
+          <option selected disabled class="hidden">Register</option>
+          <option value="{% url 'tregister' %}" class="bg-black hover:bg-[#314b6e]" >Create Account</option>
+          <option value="{% url 'sregister' %}" class="bg-black hover:bg-[#314b6e]">Student Register</option>
+        </select>
+        {% if user.is_authenticated %}
+          <a href="{% url 'userprofile' user.username %}">
+            <div>
+              <img src="{% static 'usericon.png' %}" class="w-10 h-10">
+            </div>
+          </a>
+        {% else %}
+           <a href="{% url "loginaccount" %}" <button class="" type="button">Login</button></a>
+        {% endif %}
+      </div>
+    </nav>
+  {% if messages %}
+  {% for message in messages %}
+    <div {% if message.tags %} class="relative bg-[#314b6e] p-4 mb-4 mt-1 mx-1 rounded text-gray-100 {{ message.tags }}"{% endif %}>
+
+      <span>{{ message }}</span>
+      <!-- Close Button -->
+      <button 
+        onclick="this.parentElement.style.display='none';"
+        class="absolute top-2 right-2 text-gray-100 hover:text-black font-bold text-xl">
+        ×
+      </button>
+    </div>
+  {% endfor %}
+{% endif %}
+
+  {% block body %} {% endblock body %}
+</body>
+</html>
