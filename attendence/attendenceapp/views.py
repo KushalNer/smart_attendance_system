@@ -134,9 +134,13 @@ def subject(request,username):
         name = request.POST.get('name')
         user = username
         classname = request.POST.get('class')
-        subject_data = get_object_or_404(Subject,username = user, name=name, classname = classname )
+        subject_data = Subject.objects.filter(username = user, name=name, classname = classname )
+        flag=0
+        for subject in subject_data:
+            if name == subject.name:
+                flag=1
 
-        if name not in subject_data.name:
+        if flag == 0:
             data= Subject(name = name, username = user, classname = classname)
             data.save()
             messages.success(request,"Subject Name Add Successfully")
