@@ -1,4 +1,8 @@
-﻿absl-py==2.3.0
+pip>=24.0
+setuptools>=68.0
+wheel>=0.41
+
+absl-py==2.3.0
 asgiref==3.8.1
 astunparse==1.6.3
 beautifulsoup4==4.13.4
@@ -94,6 +98,7 @@ tzdata==2025.2
 urllib3==2.5.0
 Werkzeug==3.1.3
 wrapt==1.17.2
+
 
 
 
