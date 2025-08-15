@@ -1,4 +1,13 @@
-build-essential
+#build-essential
+#cmake
+#libgl1
+#libglib2.0-0
+
 cmake
-libgl1
-libglib2.0-0
+g++
+make
+libopenblas-dev
+liblapack-dev
+libx11-dev
+libgtk-3-dev
+
