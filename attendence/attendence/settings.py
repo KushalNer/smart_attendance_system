@@ -1,7 +1,8 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-
+import pymysql
+pymysql.install_as_MySQLdb()
 # Load environment variables from a .env file (only for local development)
 load_dotenv()
 
